@@ -81,13 +81,13 @@ bool OpenItem(const base::FilePath& full_path) {
   return XDGOpen(full_path.value(), false);
 }
 
-bool OpenExternal(const GURL& url, const OpenExternalOptions& options) {
+void OpenExternal(const GURL& url, const OpenExternalOptions& options) {
   // Don't wait for exit, since we don't want to wait for the browser/email
   // client window to close before returning
   if (url.SchemeIs("mailto"))
-    return XDGEmail(url.spec(), false);
+    XDGEmail(url.spec(), false);
   else
-    return XDGOpen(url.spec(), false);
+    XDGOpen(url.spec(), false);
 }
 
 void OpenExternal(const GURL& url,
