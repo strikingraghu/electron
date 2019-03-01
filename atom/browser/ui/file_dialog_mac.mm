@@ -288,7 +288,7 @@ void OpenDialogCompletion(int chosen,
                           NSOpenPanel* dialog,
                           bool security_scoped_bookmarks,
                           atom::util::Promise promise) {
-  mate::Dictionary dict = mate::Dictionary::CreateEmpty(promise->isolate());
+  mate::Dictionary dict = mate::Dictionary::CreateEmpty(promise.isolate());
   if (chosen == NSFileHandlingPanelCancelButton) {
     dict.Set("canceled", true);
     dict.Set("filePaths", std::vector<base::FilePath>());
