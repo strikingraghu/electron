@@ -775,13 +775,14 @@ describe('<webview> tag', function () {
 
       loadWebView(webview, { src: 'about:blank' })
       await waitForEvent(webview, 'dom-ready')
-      webview.getWebContents().setDevToolsWebContents(webview2.getWebContents())
-      webview.getWebContents().openDevTools()
+      const contents = remote.getGuestWebContents(webview.getWebContentsId())
+      const devtools = remote.getGuestWebContents(webview2.getWebContentsId())
+      contents.setDevToolsWebContents(devtools)
+      contents.openDevTools()
 
       await waitForDomReady
 
       // Its WebContents should be a DevTools.
-      const devtools = webview2.getWebContents()
       assert.ok(devtools.getURL().startsWith('chrome-devtools://devtools'))
 
       const name = await new Promise((resolve) => {
@@ -1110,7 +1111,7 @@ describe('<webview> tag', function () {
       assert.ok(webview.partition)
 
       const listener = function (webContents, permission, callback) {
-        if (webContents.id === webview.getWebContents().id) {
+        if (webContents.id === webview.getWebContentsId()) {
           // requestMIDIAccess with sysex requests both midi and midiSysex so
           // grant the first midi one and then reject the midiSysex one
           if (requestedPermission === 'midiSysex' && permission === 'midi') {
@@ -1196,7 +1197,7 @@ describe('<webview> tag', function () {
       webview.partition = 'permissionTest'
       webview.setAttribute('nodeintegration', 'on')
       session.fromPartition(webview.partition).setPermissionRequestHandler((webContents, permission, callback) => {
-        if (webContents.id === webview.getWebContents().id) {
+        if (webContents.id === webview.getWebContentsId()) {
           assert.strictEqual(permission, 'notifications')
           setTimeout(() => { callback(true) }, 10)
         }
