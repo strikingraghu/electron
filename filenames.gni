@@ -70,7 +70,6 @@ filenames = {
     "lib/renderer/inspector.ts",
     "lib/renderer/ipc-renderer-internal-utils.ts",
     "lib/renderer/ipc-renderer-internal.ts",
-    "lib/renderer/remote.ts",
     "lib/renderer/security-warnings.ts",
     "lib/renderer/window-setup.ts",
     "lib/renderer/web-frame-init.ts",
